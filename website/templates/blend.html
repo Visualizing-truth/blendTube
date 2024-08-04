@@ -1,0 +1,45 @@
+<style>
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .video-container {
+        text-align: center;
+    }
+
+    iframe {
+        width: 100%;
+        height: 200px;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block title %}Here's your blend{% endblock %}
+
+{% block content %}
+
+<h1>{{ room.roomName }}</h1>
+<h2>{{user.username}}</h2>
+
+<br>
+<p>Members</p>
+{% for user in room.users%}
+<li class="list-group-item">
+    {{user.username}}
+</li>
+{%endfor%}
+
+<div class="video-grid">
+    {% for video_id, videoname_and_user in ordered_videos.items() %}
+       
+        <div class="video-container">
+            <h3>Recommended by: {{ videoname_and_user[0].username }}</h3>
+            <iframe src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0" allowfullscreen></iframe>
+            <p>{{videoname_and_user[1]}}</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
